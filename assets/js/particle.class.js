@@ -1,5 +1,6 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
+const friction = 0.99;
 
 export default class Particle {
     constructor(x, y, radius, color, velocity) {
@@ -13,18 +14,22 @@ export default class Particle {
 
     draw() {
         ctx.save();
+        ctx.globalAlpha = this.alpha;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2, false);
         ctx.fillStyle = this.color;
         ctx.fill();
+        ctx.closePath();
         ctx.restore()
     }
 
     update() {
         this.draw();
 
+        this.velocity.x *= friction;
+        this.velocity.y *= friction;
         this.x = this.x + this.velocity.x;
         this.y = this.y + this.velocity.y;
-        this.alpha = 1;
+        this.alpha -= 0.01;
     }
 }

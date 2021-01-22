@@ -13,7 +13,8 @@ export default class Hero {
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-        ctx.fillStyle = 'red';
+        ctx.fillStyle = this.color;
+        ctx.closePath();
         ctx.fill();
     }
 }
