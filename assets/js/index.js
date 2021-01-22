@@ -9,6 +9,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
     const x = innerWidth / 2;
     const y = innerHeight / 2;
     const colors = ['white', '#ff6698', '#ffb366', '#ffff66', '#98ff66', '#6698ff', '#980DFF', '#9370DB'];
+    const hero_speed = 5;
 
     canvas.width = innerWidth;
     canvas.height = innerHeight;
@@ -19,6 +20,10 @@ window.addEventListener('DOMContentLoaded', (e) => {
     let animationId;
     let strangers = [];
     let particles = [];
+    let LEFT = false;
+    let RIGHT = false;
+    let UP = false;
+    let DOWN = false;
 
 
     // spawn strangers every 200ms
@@ -42,7 +47,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
     // create explosion
     const explosion = (obj) => {
-        for (let i = 0; i < obj.radius; i++) {
+        for (let i = 0; i < obj.radius * 2.5; i++) {
             let size = Math.random() * 3;
             let particle = new Particle(
                 obj.x, obj.y,
@@ -56,6 +61,8 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
     const animate = () => {
         animationId = requestAnimationFrame(animate);
+        
+        move();
 
         // clear canvas
         ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
@@ -74,22 +81,16 @@ window.addEventListener('DOMContentLoaded', (e) => {
                 s.y + s.radius < 0 ||
                 s.y - s.radius > canvas.height
             ) {
-                setTimeout((e) => {
-                    strangers.splice(i, 1);
+                setTimeout((e) => { strangers.splice(i, 1);
                 }, 0);
             }
 
             // stranger and hero collide
-            let dist = Math.hypot(
-                s.x - hero.x,
-                s.y - hero.y
-            );
+            let dist = Math.hypot(s.x - hero.x, s.y - hero.y);
 
             if ((dist - s.radius - hero.radius) < 1) {
                 // destroy stranger
-                setTimeout((e) => {
-                    strangers.splice(i, 1);
-                }, 0);
+                setTimeout((e) => { strangers.splice(i, 1); }, 0);
 
                 // explosion
                 explosion(s);
@@ -102,13 +103,37 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
             // remove invisible particle
             if (p.alpha <= 0.1) {
-                setTimeout((e) => {
-                    particles.splice(i, 1);
-                }, 0);
+                setTimeout((e) => { particles.splice(i, 1); }, 0);
             }
-        })
+        });
+    }
+
+    // KEYDOWN FOR LEFT , RIGHT, UP, DOWN
+    document.onkeydown = (e) => {
+        console.log(e.keyCode);
+        if (e.keyCode == 37) LEFT = true;
+        if (e.keyCode == 38) UP = true;
+        if (e.keyCode == 39) RIGHT = true;
+        if (e.keyCode == 40) DOWN = true;
+    }
+
+    document.onkeyup = (e) => {
+
+        if (e.keyCode == 37) LEFT = false;
+        if (e.keyCode == 38) UP = false;
+        if (e.keyCode == 39) RIGHT = false;
+        if (e.keyCode == 40) DOWN = false;
+    }
+
+    // MOVE HERO
+    const move = () => {
+        if (LEFT) hero.x -= hero_speed;
+        if (RIGHT) hero.x += hero_speed;
+        if (UP) hero.y -= hero_speed;
+        if (DOWN) hero.y += hero_speed;
     }
 
     animate();
     spawnStrangers();
+    move();
 });
