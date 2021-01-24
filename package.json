@@ -1,0 +1,29 @@
+{
+  "name": "match_box",
+  "version": "1.0.0",
+  "description": "A simple HTML5 game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maecana/match_box.git"
+  },
+  "keywords": [
+    "html5",
+    "game",
+    "javascript"
+  ],
+  "author": "Mae Anave Cana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maecana/match_box/issues"
+  },
+  "homepage": "https://github.com/maecana/match_box#readme",
+  "dependencies": {
+    "autoprefixer": "^10.2.3",
+    "postcss": "^8.2.4",
+    "tailwindcss": "^2.0.2"
+  }
+}
