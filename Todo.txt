@@ -1,0 +1,21 @@
+HP
+
+- death 
+    - enemy,
+	- out of screen
+	- No HP (100)
+- same color -  add HP - heal
+- emeny - red ball
+	- depends on size - shrink on bullet collision
+- add glow
+- score
+- goal - hit score
+       - depends on size
+- star for power (level 1)
+	- collision hero and power - add glow animation
+    - 1. bullets (limit : 5seconds)
+	- 2. speed (limit: 5 seconds)
+	- 3. 
+- levels ()
+	- increase speed - score is higher or lower (depends on speed)
+	- 
