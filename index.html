@@ -7,11 +7,33 @@
 
     <!-- Load css files -->
     <link rel="stylesheet" href="./assets/css/style.css" />
+    <!-- Load Bootstrap css -->
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css" />
 </head>
 <body>
+    <!-- Game over / Restart Modal-->
+    <div class="modal fade" id="restartModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load  Game -->
     <canvas></canvas>
 
+    <!-- Load jquery -->
+    <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
     <!-- Load javascript files -->
     <script type="module" src="./assets/js/index.js"></script>
+    <!-- Load Bootstrap js -->
+    <script type="text/javascript" src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Load UI js -->
+    <script type="text/javascript" src="./assets/js/ui.js"></script>
 </body>
 </html>

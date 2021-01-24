@@ -1,7 +1,7 @@
 {
   "name": "match_box",
   "version": "1.0.0",
-  "description": "A simple HTML5 game",
+  "description": "> Author: Mae Anave Caña    \r > Since: January 22, 2021 - Friday    \r > Description: HTML5 game.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,8 +22,7 @@
   },
   "homepage": "https://github.com/maecana/match_box#readme",
   "dependencies": {
-    "autoprefixer": "^10.2.3",
-    "postcss": "^8.2.4",
-    "tailwindcss": "^2.0.2"
+    "bootstrap": "^4.6.0",
+    "jquery": "^3.5.1"
   }
 }
