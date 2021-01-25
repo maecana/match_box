@@ -5,6 +5,7 @@ import Particle from './particle.class.js';
 window.addEventListener('DOMContentLoaded', (e) => {
     const canvas = document.querySelector('canvas');
     const ctx = canvas.getContext('2d');
+    const restartBtn = document.querySelector('#btnRestart');
 
     const x = innerWidth / 2;
     const y = innerHeight / 2;
@@ -22,6 +23,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
     let RIGHT;
     let UP;
     let DOWN;
+    let score;
 
     const init = () => {
         hero = new Hero(x, y, 10, 'white', {});
@@ -29,8 +31,9 @@ window.addEventListener('DOMContentLoaded', (e) => {
         particles = [];
         LEFT = false;
         RIGHT = false;
-        UP = false;
+        UP = false; 
         DOWN = false;
+        score = 0;
 
         cancelAnimationFrame(animationId);
     }
@@ -143,8 +146,9 @@ window.addEventListener('DOMContentLoaded', (e) => {
             hero.x + hero.radius > canvas.width ||
             hero.y - hero.radius < 0 ||
             hero.y + hero.radius > canvas.height ) {
-            
+            hero.color = 'red';
             explosion(hero);
+            hero.radius = 0;
             
             setTimeout((e) => {
                 $("#restartModal").modal('show');
@@ -153,6 +157,15 @@ window.addEventListener('DOMContentLoaded', (e) => {
         }
     }
 
+
+    // restart
+    restartBtn.addEventListener('click', (e) => {
+        console.log("Hello World!");
+        init();
+        animate();
+
+        $("#restartModal").modal('hide');
+    });
     
     init();
     animate();

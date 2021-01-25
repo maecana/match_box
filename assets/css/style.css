@@ -8,3 +8,21 @@ body {
 #btnRestart {
     border-radius: 22px;
 }
+
+.scoreEl {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    color: white;
+    z-index: 1;
+    padding: 20px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
