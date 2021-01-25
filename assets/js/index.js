@@ -14,17 +14,26 @@ window.addEventListener('DOMContentLoaded', (e) => {
     canvas.width = innerWidth;
     canvas.height = innerHeight;
 
-
-    let hero = new Hero(x, y, 10, 'white', {});
-
+    let hero;
     let animationId;
-    let strangers = [];
-    let particles = [];
-    let LEFT = false;
-    let RIGHT = false;
-    let UP = false;
-    let DOWN = false;
+    let strangers;
+    let particles;
+    let LEFT;
+    let RIGHT;
+    let UP;
+    let DOWN;
 
+    const init = () => {
+        hero = new Hero(x, y, 10, 'white', {});
+        strangers = [];
+        particles = [];
+        LEFT = false;
+        RIGHT = false;
+        UP = false;
+        DOWN = false;
+
+        cancelAnimationFrame(animationId);
+    }
 
     // spawn strangers every 200ms
     const spawnStrangers = () => {
@@ -110,7 +119,6 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
     // KEYDOWN FOR LEFT , RIGHT, UP, DOWN
     document.onkeydown = (e) => {
-        console.log(e.keyCode);
         if (e.keyCode == 37) LEFT = true;
         if (e.keyCode == 38) UP = true;
         if (e.keyCode == 39) RIGHT = true;
@@ -118,7 +126,6 @@ window.addEventListener('DOMContentLoaded', (e) => {
     }
 
     document.onkeyup = (e) => {
-
         if (e.keyCode == 37) LEFT = false;
         if (e.keyCode == 38) UP = false;
         if (e.keyCode == 39) RIGHT = false;
@@ -131,8 +138,23 @@ window.addEventListener('DOMContentLoaded', (e) => {
         if (RIGHT) hero.x += hero_speed;
         if (UP) hero.y -= hero_speed;
         if (DOWN) hero.y += hero_speed;
+
+        if (hero.x + hero.radius < 0 ||
+            hero.x - hero.radius > canvas.width ||
+            hero.y + hero.radius < 0 ||
+            hero.y - hero.radius > canvas.height ) {
+            
+            explosion(hero);
+            
+            setTimeout((e) => {
+                $("#restartModal").modal('show');
+                init();
+            }, 500);
+        }
     }
 
+    
+    init();
     animate();
     spawnStrangers();
     move();
