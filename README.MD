@@ -4,7 +4,7 @@
 > Description: HTML5 game.    
 
 ### Requirements
-> npm -i
+> `npm i` or `npm install`
 
 ### Run
 - index.html
