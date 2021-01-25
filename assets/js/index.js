@@ -139,10 +139,10 @@ window.addEventListener('DOMContentLoaded', (e) => {
         if (UP) hero.y -= hero_speed;
         if (DOWN) hero.y += hero_speed;
 
-        if (hero.x + hero.radius < 0 ||
-            hero.x - hero.radius > canvas.width ||
-            hero.y + hero.radius < 0 ||
-            hero.y - hero.radius > canvas.height ) {
+        if (hero.x - hero.radius < 0 ||
+            hero.x + hero.radius > canvas.width ||
+            hero.y - hero.radius < 0 ||
+            hero.y + hero.radius > canvas.height ) {
             
             explosion(hero);
             
