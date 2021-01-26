@@ -1,11 +1,14 @@
 import Hero from './hero.class.js';
 import Stranger from './strangers.class.js';
 import Particle from './particle.class.js';
+import UIScript from './ui.class.js';
 
 window.addEventListener('DOMContentLoaded', (e) => {
     const canvas = document.querySelector('canvas');
     const ctx = canvas.getContext('2d');
     const restartBtn = document.querySelector('#btnRestart');
+    const canvasScore = document.querySelector('#canvasScore');
+    const modalScore = document.querySelector("#modalScore");
 
     const x = innerWidth / 2;
     const y = innerHeight / 2;
@@ -24,6 +27,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
     let UP;
     let DOWN;
     let score;
+    let hero_off_screen_sound;
 
     const init = () => {
         hero = new Hero(x, y, 10, 'white', {});
@@ -34,10 +38,11 @@ window.addEventListener('DOMContentLoaded', (e) => {
         UP = false; 
         DOWN = false;
         score = 0;
+        hero_off_screen_sound = new UIScript();
 
-        cancelAnimationFrame(animationId);
+        canvasScore.innerHTML = 0;
     }
-
+    
     // spawn strangers every 200ms
     const spawnStrangers = () => {
         setInterval((e) => {
@@ -106,6 +111,10 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
                 // explosion
                 explosion(s);
+                
+                // set score
+                score += parseInt(s.radius+50);
+                canvasScore.innerHTML = score;
             }
         });
 
@@ -142,6 +151,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
         if (UP) hero.y -= hero_speed;
         if (DOWN) hero.y += hero_speed;
 
+        // HERO off bound
         if (hero.x - hero.radius < 0 ||
             hero.x + hero.radius > canvas.width ||
             hero.y - hero.radius < 0 ||
@@ -150,9 +160,20 @@ window.addEventListener('DOMContentLoaded', (e) => {
             explosion(hero);
             hero.radius = 0;
             
+            // play dead sound
+            if(hero_off_screen_sound) {
+                hero_off_screen_sound.playHeroOffScreen();
+            }
+            
+            // stop animation
             setTimeout((e) => {
+                modalScore.innerHTML = score;
+                if(score > 0) {
+                    restartBtn.innerHTML = 'Restart Game';
+                }
                 $("#restartModal").modal('show');
-                init();
+
+                cancelAnimationFrame(animationId);
             }, 500);
         }
     }
@@ -160,15 +181,14 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
     // restart
     restartBtn.addEventListener('click', (e) => {
-        console.log("Hello World!");
         init();
         animate();
+        spawnStrangers();
+        move();
 
         $("#restartModal").modal('hide');
     });
     
-    init();
-    animate();
-    spawnStrangers();
-    move();
+    // show modal
+    $("#restartModal").modal('show');
 });
