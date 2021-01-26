@@ -1,7 +1,7 @@
 import Hero from './hero.class.js';
 import Stranger from './strangers.class.js';
 import Particle from './particle.class.js';
-import UIScript from './ui.class.js';
+import Sound from './sound.class.js';
 
 window.addEventListener('DOMContentLoaded', (e) => {
     const canvas = document.querySelector('canvas');
@@ -27,6 +27,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
     let UP;
     let DOWN;
     let score;
+    let sounds;
     let hero_off_screen_sound;
     let hero_stranger_sound;
 
@@ -39,8 +40,9 @@ window.addEventListener('DOMContentLoaded', (e) => {
         UP = false; 
         DOWN = false;
         score = 0;
-        hero_off_screen_sound = new UIScript();
-        hero_stranger_sound = new UIScript();
+        sounds = new Sound();
+        hero_off_screen_sound = new Sound();
+        hero_stranger_sound = new Sound();
 
         canvasScore.innerHTML = 0;
     }
@@ -194,6 +196,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
         animate();
         spawnStrangers();
         move();
+        sounds.playButtonClick();
 
         $("#restartModal").modal('hide');
     });
