@@ -28,6 +28,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
     let DOWN;
     let score;
     let hero_off_screen_sound;
+    let hero_stranger_sound;
 
     const init = () => {
         hero = new Hero(x, y, 10, 'white', {});
@@ -39,6 +40,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
         DOWN = false;
         score = 0;
         hero_off_screen_sound = new UIScript();
+        hero_stranger_sound = new UIScript();
 
         canvasScore.innerHTML = 0;
     }
@@ -111,6 +113,13 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
                 // explosion
                 explosion(s);
+
+                // hero-stranger collision sound
+                setTimeout((e) => {
+                    // if(hero_stranger_sound) {
+                        hero_stranger_sound.playHeroStranger();
+                    // }
+                }, 0);
                 
                 // set score
                 score += parseInt(s.radius+50);
