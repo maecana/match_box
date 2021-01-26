@@ -115,11 +115,11 @@ window.addEventListener('DOMContentLoaded', (e) => {
                 explosion(s);
 
                 // hero-stranger collision sound
-                setTimeout((e) => {
-                    // if(hero_stranger_sound) {
-                        hero_stranger_sound.playHeroStranger();
-                    // }
-                }, 0);
+                let hero_stranger_sound = new Audio;
+                hero_stranger_sound.src = '../assets/sound/smash.mp3';
+                hero_stranger_sound.volume = 1.0;
+                hero_stranger_sound.play();
+                hero_stranger_sound = null;
                 
                 // set score
                 score += parseInt(s.radius+50);
