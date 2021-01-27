@@ -12,6 +12,10 @@ export default class Sound {
         this.bg.src = '../assets/sound/bg.mp3';
         this.bg.volume = 0.5;
         this.bg.loop = true;
+
+        this.game_over = new Audio;
+        this.game_over.src = '../assets/sound/game_over.mp3';
+        this.game_over.volume = 1.0;
     }
 
     playHeroOffScreen() {
@@ -24,6 +28,10 @@ export default class Sound {
 
     playBg() {
         this.bg.play();
+    }
+
+    playGameOver() {
+        this.game_over.play();
     }
 
     stopBg() {

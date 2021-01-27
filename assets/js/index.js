@@ -184,6 +184,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
                     restartBtn.innerHTML = 'Restart Game';
                 }
                 $("#restartModal").modal('show');
+                sounds.playGameOver();
 
                 cancelAnimationFrame(animationId);
             }, 500);
