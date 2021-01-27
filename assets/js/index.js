@@ -174,6 +174,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
             // play dead sound
             if(hero_off_screen_sound) {
                 hero_off_screen_sound.playHeroOffScreen();
+                sounds.stopBg();
             }
             
             // stop animation
@@ -197,6 +198,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
         spawnStrangers();
         move();
         sounds.playButtonClick();
+        sounds.playBg();
 
         $("#restartModal").modal('hide');
     });
