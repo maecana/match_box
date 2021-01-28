@@ -30,7 +30,58 @@ window.addEventListener('DOMContentLoaded', (e) => {
     let sounds;
     let hero_off_screen_sound;
     let hero_stranger_sound;
+    let highScore;
 
+
+
+    // save high score to local storage
+    const saveHighScore = (hs) => {
+        if(typeof(Storage) !== undefined) {
+            let localHs = fetchHighScore();
+
+            if(localHs < hs) {
+                localStorage.setItem('high_score', hs);
+            }
+        }
+    }
+
+    // fetch high score from local storage
+    const fetchHighScore = () => {
+        if(typeof(Storage) !== undefined) {
+            let localHighScore = localStorage.getItem("high_score");
+            if(localHighScore != undefined || localHighScore != null) {
+                return localHighScore;
+            } else { return 0; }
+        } else { return 0; }
+    }
+
+    // reset high score in local storage
+    const resetHighScore = () => {
+        if(typeof(Storage) !== undefined) {
+            let localHighScore = fetchHighScore();
+            if(localHighScore != undefined || localHighScore != null) {
+                saveHighScore(0);
+            }
+        }
+    }
+
+    // set high score variable
+    const setHighScore = () => {
+        if(typeof(Storage) !== undefined) {
+            let localHighScore = fetchHighScore();
+            if(localHighScore != undefined || localHighScore != null) {
+                highScore = fetchHighScore();
+            }
+        }
+    }
+
+    // display high score
+    const displayHighScore = () => {
+        const highScoreEl = document.querySelector('#canvasHighScore');
+        highScoreEl.innerHTML = fetchHighScore();
+    }
+
+    // initialize game
     const init = () => {
         hero = new Hero(x, y, 10, 'white', {});
         strangers = [];
@@ -45,6 +96,9 @@ window.addEventListener('DOMContentLoaded', (e) => {
         hero_stranger_sound = new Sound();
 
         canvasScore.innerHTML = 0;
+
+        setHighScore();
+        displayHighScore();
     }
     
     // spawn strangers every 200ms
@@ -183,6 +237,10 @@ window.addEventListener('DOMContentLoaded', (e) => {
                 if(score > 0) {
                     restartBtn.innerHTML = 'Restart Game';
                 }
+                
+                saveHighScore(score);
+                displayHighScore();
+
                 sounds.playGameOver();
                 $("#restartModal").modal('show');
 
@@ -203,7 +261,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
         $("#restartModal").modal('hide');
     });
-    
+
     // show modal
     $("#restartModal").modal('show');
 });
