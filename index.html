@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="./assets/css/style.css" />
     <!-- Load Bootstrap css -->
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <!-- Load Bootstrap Icon -->
+    <link rel="stylesheet" href="./node_modules/bootstrap-icons/font/bootstrap-icons.css" />
 </head>
 <body>
     <!-- Game over / Restart Modal-->
@@ -29,14 +31,28 @@
         </div>
     </div>
 
-    <!-- Canvas Score -->
-    <div class="scoreEl">
-        <span>HighScore: </span><span id="canvasHighScore">0</span><br />
-        <span>Points: </span><span id="canvasScore">0</span>
-    </div>
-
     <!-- Load  Game -->
     <canvas></canvas>
+
+    <!-- Top Nav -->
+    <div class="tapNav text-white col-12 p-4">
+        <div class="row">
+            <div class="col-6">
+                <!-- Canvas Score -->
+                <div class="scoreEl">
+                    <span>HighScore: </span><span id="canvasHighScore">0</span><br />
+                    <span>Points: </span><span id="canvasScore">0</span>
+                </div>
+            </div>
+
+            <div class="col-6 d-flex justify-content-end align-items-center">
+                <!-- Settings -->
+                <div class="settingsEl">
+                    <button class="btn btn-primary" id="btnSettings"><i class="bi bi-gear-fill"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Load jquery -->
     <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>

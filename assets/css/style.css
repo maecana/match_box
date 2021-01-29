@@ -9,14 +9,18 @@ body {
     border-radius: 22px;
 }
 
-.scoreEl {
+
+.topNav {
     position: absolute;
     width: 100%;
     top: 0;
     left: 0;
-    color: white;
     z-index: 1;
-    padding: 20px;
+    color: white;
+}
+
+.scoreEl {
+    font-weight: bold;
     -moz-user-select: none;
     -webkit-user-select: none;
 }
