@@ -2,6 +2,7 @@ import Hero from './hero.class.js';
 import Stranger from './strangers.class.js';
 import Particle from './particle.class.js';
 import Sound from './sound.class.js';
+import Store from './store.class.js';
 
 window.addEventListener('DOMContentLoaded', (e) => {
     const canvas = document.querySelector('canvas');
@@ -31,55 +32,8 @@ window.addEventListener('DOMContentLoaded', (e) => {
     let hero_off_screen_sound;
     let hero_stranger_sound;
     let highScore;
+    let store = new Store(highScore);
 
-
-
-    // save high score to local storage
-    const saveHighScore = (hs) => {
-        if(typeof(Storage) !== undefined) {
-            let localHs = fetchHighScore();
-
-            if(localHs < hs) {
-                localStorage.setItem('high_score', hs);
-            }
-        }
-    }
-
-    // fetch high score from local storage
-    const fetchHighScore = () => {
-        if(typeof(Storage) !== undefined) {
-            let localHighScore = localStorage.getItem("high_score");
-            if(localHighScore != undefined || localHighScore != null) {
-                return localHighScore;
-            } else { return 0; }
-        } else { return 0; }
-    }
-
-    // reset high score in local storage
-    const resetHighScore = () => {
-        if(typeof(Storage) !== undefined) {
-            let localHighScore = fetchHighScore();
-            if(localHighScore != undefined || localHighScore != null) {
-                saveHighScore(0);
-            }
-        }
-    }
-
-    // set high score variable
-    const setHighScore = () => {
-        if(typeof(Storage) !== undefined) {
-            let localHighScore = fetchHighScore();
-            if(localHighScore != undefined || localHighScore != null) {
-                highScore = fetchHighScore();
-            }
-        }
-    }
-
-    // display high score
-    const displayHighScore = () => {
-        const highScoreEl = document.querySelector('#canvasHighScore');
-        highScoreEl.innerHTML = fetchHighScore();
-    }
 
     // initialize game
     const init = () => {
@@ -97,8 +51,8 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
         canvasScore.innerHTML = 0;
 
-        setHighScore();
-        displayHighScore();
+        store.setHighScore();
+        store.displayHighScore();
     }
     
     // spawn strangers every 200ms
@@ -238,8 +192,8 @@ window.addEventListener('DOMContentLoaded', (e) => {
                     restartBtn.innerHTML = 'Restart Game';
                 }
                 
-                saveHighScore(score);
-                displayHighScore();
+                store.saveHighScore(score);
+                store.displayHighScore();
 
                 sounds.playGameOver();
                 $("#restartModal").modal('show');
