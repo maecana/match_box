@@ -1,6 +1,6 @@
 export default class Store {
-    constructor (hs) {
-        this.highScore = hs;
+    constructor () {
+        this.highScore;
     }
     
     // save high score to local storage
@@ -27,10 +27,8 @@ export default class Store {
     // reset high score in local storage
     resetHighScore() {
         if(typeof(Storage) !== undefined) {
-            let localHighScore = this.fetchHighScore();
-            if(localHighScore != undefined || localHighScore != null) {
-                this.saveHighScore(0);
-            }
+            localStorage.setItem("high_score", 0);
+            this.displayHighScore();
         }
     }
 

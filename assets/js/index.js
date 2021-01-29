@@ -8,6 +8,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
     const canvas = document.querySelector('canvas');
     const ctx = canvas.getContext('2d');
     const restartBtn = document.querySelector('#btnRestart');
+    const resetHSBtn = document.querySelector('#btnResetHS');
     const canvasScore = document.querySelector('#canvasScore');
     const modalScore = document.querySelector("#modalScore");
 
@@ -31,8 +32,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
     let sounds;
     let hero_off_screen_sound;
     let hero_stranger_sound;
-    let highScore;
-    let store = new Store(highScore);
+    let store = new Store();
 
 
     // initialize game
@@ -214,6 +214,12 @@ window.addEventListener('DOMContentLoaded', (e) => {
         sounds.playBg();
 
         $("#restartModal").modal('hide');
+    });
+
+    // settings
+    resetHSBtn.addEventListener('click', (e) => {
+        console.log("settings button clicked");
+        store.resetHighScore();
     });
 
     // show modal
