@@ -3,7 +3,9 @@ import Stranger from './strangers.class.js';
 import Particle from './particle.class.js';
 import Sound from './sound.class.js';
 import Store from './store.class.js';
+import WinAct from './winAct.class.js';
 
+// content load
 window.addEventListener('DOMContentLoaded', (e) => {
     const canvas = document.querySelector('canvas');
     const ctx = canvas.getContext('2d');
@@ -33,7 +35,10 @@ window.addEventListener('DOMContentLoaded', (e) => {
     let hero_off_screen_sound;
     let hero_stranger_sound;
     let store = new Store();
+    let winAct = new WinAct();
 
+    // visibility
+    winAct.detectChange();
 
     // initialize game
     const init = () => {
