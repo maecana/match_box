@@ -17,30 +17,4 @@ export default class WinAct {
             return !document[stateKey];
         }
     };
-
-    detectChange = () => {
-        var visible = this.vis();
-        
-        visible(function(){
-            let winState = visible();
-            if(winState) {
-                // Visible
-                // this.continueGame();
-                console.log("vis");
-            } else {
-                // Not visible
-                // this.pauseGame();
-
-                console.log("no vis");
-            }
-        });
-    }
-
-    continueGame = () => {
-        
-    }
-
-    pauseGame = () => {
-
-    }
 }

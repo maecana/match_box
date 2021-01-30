@@ -36,9 +36,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
     let hero_stranger_sound;
     let store = new Store();
     let winAct = new WinAct();
-
-    // visibility
-    winAct.detectChange();
+    let isPaused = false;
 
     // initialize game
     const init = () => {
@@ -93,64 +91,95 @@ window.addEventListener('DOMContentLoaded', (e) => {
         }
     }
 
+    // window visibility detection
+    const detectChange = () => {
+        var visible = winAct.vis();
+        
+        visible(function() {
+            let winState = visible();
+            if(winState) {
+                // Visible
+                isPaused = false;
+            } else {
+                // Not visible
+                isPaused = true;
+            }
+        });
+    }
+
     const animate = () => {
         animationId = requestAnimationFrame(animate);
+
+        // visibility
+        detectChange(isPaused);
         
-        move();
-
-        // clear canvas
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // draw hero
-        hero.draw();
-
-        strangers.forEach((s, i) => {
-            s.update();
-
-            // remove off screen strangers
-            if (
-                s.x + s.radius < 0 ||
-                s.x - s.radius > canvas.width ||
-                s.y + s.radius < 0 ||
-                s.y - s.radius > canvas.height
-            ) {
-                setTimeout((e) => { strangers.splice(i, 1);
-                }, 0);
+        if(isPaused) {
+            // GAME IS PAUSED
+            sounds.pauseAll();
+        } else {
+            // GAME IS PLAYING
+            
+            // play background music
+            if(sounds.bg.paused) {
+                sounds.playBg();
             }
+            
+            move();
 
-            // stranger and hero collide
-            let dist = Math.hypot(s.x - hero.x, s.y - hero.y);
+            // clear canvas
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            if ((dist - s.radius - hero.radius) < 1) {
-                // destroy stranger
-                setTimeout((e) => { strangers.splice(i, 1); }, 0);
+            // draw hero
+            hero.draw();
 
-                // explosion
-                explosion(s);
+            strangers.forEach((s, i) => {
+                s.update();
 
-                // hero-stranger collision sound
-                let hero_stranger_sound = new Audio;
-                hero_stranger_sound.src = '../assets/sound/smash.mp3';
-                hero_stranger_sound.volume = 1.0;
-                hero_stranger_sound.play();
-                hero_stranger_sound = null;
-                
-                // set score
-                score += parseInt(s.radius+50);
-                canvasScore.innerHTML = score;
-            }
-        });
+                // remove off screen strangers
+                if (
+                    s.x + s.radius < 0 ||
+                    s.x - s.radius > canvas.width ||
+                    s.y + s.radius < 0 ||
+                    s.y - s.radius > canvas.height
+                ) {
+                    setTimeout((e) => { strangers.splice(i, 1);
+                    }, 0);
+                }
 
-        // explosion
-        particles.forEach((p, i) => {
-            p.update();
+                // stranger and hero collide
+                let dist = Math.hypot(s.x - hero.x, s.y - hero.y);
 
-            // remove invisible particle
-            if (p.alpha <= 0.1) {
-                setTimeout((e) => { particles.splice(i, 1); }, 0);
-            }
-        });
+                if ((dist - s.radius - hero.radius) < 1) {
+                    // destroy stranger
+                    setTimeout((e) => { strangers.splice(i, 1); }, 0);
+
+                    // explosion
+                    explosion(s);
+
+                    // hero-stranger collision sound
+                    let hero_stranger_sound = new Audio;
+                    hero_stranger_sound.src = '../assets/sound/smash.mp3';
+                    hero_stranger_sound.volume = 1.0;
+                    hero_stranger_sound.play();
+                    hero_stranger_sound = null;
+                    
+                    // set score
+                    score += parseInt(s.radius+50);
+                    canvasScore.innerHTML = score;
+                }
+            });
+
+            // explosion
+            particles.forEach((p, i) => {
+                p.update();
+
+                // remove invisible particle
+                if (p.alpha <= 0.1) {
+                    setTimeout((e) => { particles.splice(i, 1); }, 0);
+                }
+            });
+        }
     }
 
     // KEYDOWN FOR LEFT , RIGHT, UP, DOWN
@@ -169,7 +198,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
     }
 
     // MOVE HERO
-    const move = () => {
+    const move = () => {  
         if (LEFT) hero.x -= hero_speed;
         if (RIGHT) hero.x += hero_speed;
         if (UP) hero.y -= hero_speed;

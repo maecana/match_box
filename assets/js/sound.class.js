@@ -38,4 +38,11 @@ export default class Sound {
         this.bg.pause();
         this.bg.currentTime = 0;
     }
+
+    // PAUSE GAME
+    pauseAll() {
+        this.bg.pause();
+        this.game_over.pause();
+        this.hero_off_screen_sound.pause();
+    }
 };
